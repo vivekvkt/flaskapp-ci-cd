@@ -8,10 +8,12 @@ pipeline {
         DOCKER_HUB_CREDENTIALS_ID = 'docker-hub-credentials-id'
         KUBE_CONFIG_CREDENTIALS_ID = 'kube-config'
         K8S_NAMESPACE = 'default'
+        DOCKER_USERNAME ="${env.DOCKER_USERNAME}"
+        DOCKER_PASSWORD = "${env.DOCKER_PASSWORD}"
     }
 
     options {
-        credentialsBinding(credentialsId: DOCKER_HUB_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')
+        withCredentials(credentialsId: DOCKER_HUB_CREDENTIALS_ID, usernameVariable:'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')
     }
 
     stages {
@@ -27,7 +29,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        docker.withRegistry("https://index.docker.io/v1/", "DOCKER_USERNAME", "DOCKER_PASSWORD") {
+                        docker.withRegistry("https://index.docker.io/v2/", "DOCKER_USERNAME", "DOCKER_PASSWORD") {
                             docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").push()
                         }
                     }
