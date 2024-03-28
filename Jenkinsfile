@@ -3,8 +3,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE_NAME = 'vivek1592/flaskapp:first'
-        DOCKER_IMAGE_TAG = "${env.BUILD_NUMBER}"
+        DOCKER_IMAGE_NAME = 'vivek1592/flaskapp'
+        DOCKER_IMAGE_TAG = 'first'
         DOCKER_HUB_CREDENTIALS_ID = 'docker-hub-credentials-id'
         KUBE_CONFIG_CREDENTIALS_ID = 'kube-config'
         K8S_NAMESPACE = 'default'
