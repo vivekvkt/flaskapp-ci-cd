@@ -12,10 +12,7 @@ pipeline {
         DOCKER_PASSWORD = "${env.DOCKER_PASSWORD}"
     }
 
-    options {
-        withCredentials(credentialsId: DOCKER_HUB_CREDENTIALS_ID, usernameVariable:'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')
-    }
-
+   
     stages {
         stage('Build Docker Image') {
             steps {
