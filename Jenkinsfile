@@ -27,7 +27,13 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         docker.withRegistry("https://index.docker.io/v2/", "DOCKER_USERNAME", "DOCKER_PASSWORD") {
-                            docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").push()
+                           
+                            def dockerImage = docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+                            echo "Pushing Docker image..."
+                            dockerImage.push()
+                            echo "Docker image pushed successfully"
+
+                            
                         }
                     }
                 }
